@@ -15,13 +15,16 @@
 
 int main(int argc, char** argv) {
 
+    struct node *head = NULL;
+
 
     return (0);
 }
 
+
 //XOR two pointers(The TA's suggestion)
 
-node* XOR(void* p1, void* p2) {
+ node* XOR(void* p1, void* p2) {
 
     return (void*) (((uintptr_t) p1) ^ ((uintptr_t) p2));
 
@@ -35,37 +38,74 @@ void insert(dlist *this, item* thing, bool atTail) {
     node* new_node = (node*) malloc(sizeof (node*));
 
     new_node->thing = thing;
-    
+
     //in case the list is empty
-    if(this == NULL) {
-    
+    if (this == NULL) {
+
         new_node = XOR(NULL, NULL);
-    
+
     }
 
     //insert node in the front
     if (this != NULL && atTail == 0) {
 
-        struct node* nextNode = XOR(NULL, this->head);
-        this->head->ptr = XOR(new_node, nextNode);
-        
+        node* nextNode = XOR(NULL, this->head);
+        this->head = XOR(new_node, nextNode);
+
         //update the head
-         this->head = new_node;
+        this->head = new_node;
     }
-    
-    
+
+
     //insert node in the end
     if (this != NULL && atTail == 1) {
 
-        struct node* previousNode = XOR(this->tail, NULL);
-        this->tail->ptr = XOR(previousNode, new_node);
-        
+        node* previousNode = XOR(this->tail, NULL);
+        this->tail = XOR(previousNode, new_node);
+
         //update the tail
         this->tail = new_node;
 
     }
 
-  free(new_node);
+    free(new_node);
 }
 
+item* extract(dlist *this, bool atTail) {
 
+    if(this != NULL && atTail == 0){
+        
+        return this->head->thing;
+       
+        node* nextNode = XOR(NULL, this->head);
+        
+        //updating the nextNode to be the new head
+        nextNode = this->head;
+    }
+    
+    if(this !=NULL && atTail == 1){
+        
+        return this->tail->thing;
+        node* previousNode = XOR(this->tail, NULL);
+        
+        //update previousNode to be the new tail
+        previousNode = this->tail;
+    }
+
+}
+
+void reverse(dlist *this) {
+    
+    //temporary place holder to assignment head to tail and reverse
+    node* temp = this->head;
+    this->head = this->tail;
+    this->tail = temp;
+
+}
+
+item* search(dlist *this, bool(*matches)(item*)) {
+
+
+
+
+}
