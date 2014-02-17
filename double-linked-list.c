@@ -24,8 +24,8 @@ int main(int argc, char** argv) {
 //XOR two pointers(The TA's suggestion)
 
 node* XOR(void* p1, void* p2) {
-    
-    (void*) (((uintptr_t) p1) ^ ((uintptr_t) p2));
+
+    return (void*) (((uintptr_t) p1) ^ ((uintptr_t) p2));
 
 }
 
@@ -37,26 +37,24 @@ void insert(dlist *this, item* thing, bool atTail) {
     node* new_node = (node*) malloc(sizeof (node*));
 
     new_node->thing = thing;
-    new_node->ptr = (*this->head, NULL);
 
-    XOR(this->head, NULL);  //previous node
-    XOR(NULL, this->tail);  //next node
-    
-    //insert node in the end
-    if (this != NULL && atTail == 1) {
 
-        this->head = XOR(NULL, new_node);
-        
-
-    }
-    
     //insert node in the front
     if (this != NULL && atTail == 0) {
 
-        this->tail = XOR(new_node, NULL);
-        
-     }
-    
+        struct node* nextNode = XOR(NULL, this->head);
+        this->head->ptr = XOR(new_node, nextNode);
 
-    free(new_node);
+    }
+
+    //insert node in the end
+    if (this != NULL && atTail == 1) {
+
+        struct node* previousNode = XOR(this->tail, NULL);
+        this->tail->ptr = XOR(previousNode, new_node);
+
+
+    }
+
+  free(new_node);
 }
