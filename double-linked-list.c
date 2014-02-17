@@ -87,7 +87,8 @@ item* extract(dlist *this, bool atTail) {
         
        //update nextNode to new head
        node* nextNode=XOR(NULL, this->head);
-       this->head=nextNode;
+       nextNode = this->head;
+       this->head = NULL;
 
     if (this != NULL && atTail == 1) {
 
@@ -97,7 +98,8 @@ item* extract(dlist *this, bool atTail) {
     }
        //update previous to be new tail
        node* previousNode = XOR(this->tail, NULL);
-       this->tail=previousNode;
+       previousNode = this->tail;
+       this->tail = NULL;
 }
 
 void reverse(dlist *this) {
@@ -125,5 +127,4 @@ item* search(dlist *this, bool(*matches)(item*)) {
     return NULL;
 
 }
-
 
