@@ -35,7 +35,13 @@ void insert(dlist *this, item* thing, bool atTail) {
     node* new_node = (node*) malloc(sizeof (node*));
 
     new_node->thing = thing;
-
+    
+    //in case the list is empty
+    if(this == NULL) {
+    
+        new_node = XOR(NULL, NULL);
+    
+    }
 
     //insert node in the front
     if (this != NULL && atTail == 0) {
@@ -61,4 +67,5 @@ void insert(dlist *this, item* thing, bool atTail) {
 
   free(new_node);
 }
+
 
