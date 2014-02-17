@@ -15,8 +15,6 @@
 
 int main(int argc, char** argv) {
 
-    struct node *head = NULL;
-
 
     return (0);
 }
@@ -42,7 +40,8 @@ void insert(dlist *this, item* thing, bool atTail) {
     //in case the list is empty
     if (this == NULL) {
 
-        new_node = XOR(NULL, NULL);
+        this->head = new_node 
+        this->tail = new_node;
 
     }
 
@@ -82,28 +81,23 @@ item* extract(dlist *this, bool atTail) {
     if (this != NULL && atTail == 0) {
 
 
-        node* nextNode = XOR(NULL, this->head);
-
-        //updating the nextNode to be the new head
-        nextNode = this->head;
-
-
         return this->head->thing;
-
-
+        
     }
+        
+       //update nextNode to new head
+       node* nextNode=XOR(NULL, this->head);
+       this->head=nextNode;
 
     if (this != NULL && atTail == 1) {
 
-        node* previousNode = XOR(this->tail, NULL);
-
-        //update previousNode to be the new tail
-        previousNode = this->tail;
-
+       
         return this->tail->thing;
-
+        
     }
-
+       //update previous to be new tail
+       node* previousNode = XOR(this->tail, NULL);
+       this->tail=previousNode;
 }
 
 void reverse(dlist *this) {
@@ -131,4 +125,5 @@ item* search(dlist *this, bool(*matches)(item*)) {
     return NULL;
 
 }
+
 
