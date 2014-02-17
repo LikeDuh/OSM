@@ -11,8 +11,6 @@
 #include "doublelink.h"
 
 
-
-
 //Main function
 
 int main(int argc, char** argv) {
@@ -44,17 +42,23 @@ void insert(dlist *this, item* thing, bool atTail) {
 
         struct node* nextNode = XOR(NULL, this->head);
         this->head->ptr = XOR(new_node, nextNode);
-
+        
+        //update the head
+         this->head = new_node;
     }
-
+    
+    
     //insert node in the end
     if (this != NULL && atTail == 1) {
 
         struct node* previousNode = XOR(this->tail, NULL);
         this->tail->ptr = XOR(previousNode, new_node);
-
+        
+        //update the tail
+        this->tail = new_node;
 
     }
 
   free(new_node);
 }
+
