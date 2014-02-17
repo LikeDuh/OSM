@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
 
 //XOR two pointers(The TA's suggestion)
 
- node* XOR(void* p1, void* p2) {
+node* XOR(void* p1, void* p2) {
 
     return (void*) (((uintptr_t) p1) ^ ((uintptr_t) p2));
 
@@ -73,29 +73,41 @@ void insert(dlist *this, item* thing, bool atTail) {
 
 item* extract(dlist *this, bool atTail) {
 
-    if(this != NULL && atTail == 0){
-        
-        return this->head->thing;
-       
+    //if the list is empty then return nothing
+    if (this == NULL) {
+
+        return NULL;
+    }
+
+    if (this != NULL && atTail == 0) {
+
+
         node* nextNode = XOR(NULL, this->head);
-        
+
         //updating the nextNode to be the new head
         nextNode = this->head;
+
+
+        return this->head->thing;
+
+
     }
-    
-    if(this !=NULL && atTail == 1){
-        
-        return this->tail->thing;
+
+    if (this != NULL && atTail == 1) {
+
         node* previousNode = XOR(this->tail, NULL);
-        
+
         //update previousNode to be the new tail
         previousNode = this->tail;
+
+        return this->tail->thing;
+
     }
 
 }
 
 void reverse(dlist *this) {
-    
+
     //temporary place holder to assignment head to tail and reverse
     node* temp = this->head;
     this->head = this->tail;
@@ -105,7 +117,18 @@ void reverse(dlist *this) {
 
 item* search(dlist *this, bool(*matches)(item*)) {
 
+    node* currNode = this->head;
+    node* prevNode = NULL;
 
+    while (currNode != NULL) {
+        if (matches(currNode->thing)) {
 
+            return currNode->thing;
+        }
+        node* temp = currNode;
+        currNode = XOR(currNode->ptr, prevNode->ptr);
+    }
+    return NULL;
 
 }
+
